@@ -12,7 +12,10 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let user = await User.findOne({ email: profile.emails[0].value });
+        const email = profile.emails?.[0]?.value || `${profile.username}@github.com`
+        const avatar = profile.photos?.[0]?.value || ""
+
+        let user = await User.findOne({ email })
 
         if (user) {
           return done(null, user);
@@ -20,8 +23,8 @@ passport.use(
 
         user = await User.create({
           name: profile.displayName || profile.username,
-          email: profile.emails[0].value,
-          avatar: profile.photos[0].value,
+          email,
+          avatar,
           authProvider: "github",
         });
 
@@ -32,5 +35,19 @@ passport.use(
     },
   ),
 );
+
+
+passport.serializeUser((user, done) => {
+  done(null, user._id)
+})
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id)
+    done(null, user)
+  } catch (error) {
+    done(error, null)
+  }
+})
 
 export default passport;

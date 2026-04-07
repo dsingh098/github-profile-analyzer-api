@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.routes.js";
 import env from "./config/env.js";
 import passport from "./config/passport.js";
 import session from "express-session"
+import analyzeRouter from "./routes/analyze.routes.js"
 
 const app = express();
 const port = env.PORT;
@@ -28,6 +29,7 @@ app.use(passport.session());
 // end-point
 
 app.use("/api/auth", authRouter);
+app.use("/api/analyze", analyzeRouter)
 
 // start server and conntected Db
 connectDb();

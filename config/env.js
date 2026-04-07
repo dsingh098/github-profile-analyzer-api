@@ -7,7 +7,9 @@ const requiredEnvVars = [
     "ACCESS_TOKEN_SECRET",
     "REFRESH_TOKEN_SECRET",
     "GITHUB_CLIENT_ID",
-    "GITHUB_CLIENT_SECRET"
+    "GITHUB_CLIENT_SECRET",
+    "GITHUB_TOKEN",
+    "GROQ_API_KEY"
 ]
 
 requiredEnvVars.forEach((key) => {
@@ -21,8 +23,9 @@ const env = {
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
     GITHUB_CLIENT_ID:process.env.GITHUB_CLIENT_ID,
-    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET
-    
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    GITHUB_TOKEN:process.env.GITHUB_TOKEN,
+    GROQ_API_KEY:process.env.GROQ_API_KEY
 }
 
 export default env
