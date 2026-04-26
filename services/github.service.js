@@ -9,19 +9,24 @@ const headers = {
 
 export const getGithubProfile = async (username) => {
     const response = await fetch(`${GITHUB_API}/users/${username}`, { headers })
-    
-    if(!response.ok) {
-        throw new Error("GitHub user not found")
+
+    if (!response.ok) {
+        const err = await response.json()
+        throw new Error(err.message || "GitHub user not found")
     }
-    
+
     return await response.json()
 }
 
 export const getGithubRepos = async (username) => {
     const response = await fetch(
-        `${GITHUB_API}/users/${username}/repos?sort=updated&per_page=10`, 
+        `${GITHUB_API}/users/${username}/repos?sort=updated&per_page=50`,
         { headers }
     )
-    
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch repositories")
+    }
+
     return await response.json()
 }

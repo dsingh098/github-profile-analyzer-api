@@ -1,38 +1,17 @@
-import express from "express";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import connectDb from "./config/db.js";
-import authRouter from "./routes/auth.routes.js";
-import env from "./config/env.js";
-import passport from "./config/passport.js";
-import session from "express-session"
+import express from "express"
+import cors from "cors"
 import analyzeRouter from "./routes/analyze.routes.js"
+import env from "./config/env.js"
 
-const app = express();
-const port = env.PORT;
+const app = express()
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors());
+app.use(express.json())
+app.use(cors({
+    origin: "http://localhost:5173",
+}))
 
-app.use(
-  session({
-    secret: env.ACCESS_TOKEN_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// end-point
-
-app.use("/api/auth", authRouter);
 app.use("/api/analyze", analyzeRouter)
 
-// start server and conntected Db
-connectDb();
-app.listen(port, () => {
-  console.log(`Server is connected on port ${port}`);
-});
+app.listen(env.PORT, () => {
+    console.log(`Server running on port ${env.PORT}`)
+})

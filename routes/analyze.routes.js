@@ -1,10 +1,8 @@
 import express from "express"
-import { analyzeDetailed, analyzePublic } from "../controllers/analyze.controller.js"
-import { isLogin } from "../middleware/auth.middleware.js"
+import { analyzeProfile } from "../controllers/analyze.controller.js"
 
 const router = express.Router()
 
-router.get("/:username/detailed", isLogin, analyzeDetailed)  // protected
-router.get("/:username", analyzePublic)                       // public
+router.get("/:username", analyzeProfile)
 
-export default router   
+export default router
